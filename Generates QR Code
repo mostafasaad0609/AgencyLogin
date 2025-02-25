@@ -1,0 +1,16 @@
+import pyqrcode
+import png
+from pyqrcode import QRCode
+
+# Login credentials (Avoid storing passwords in plaintext)
+username = "m.farag"
+password = "M@stafa_2717"
+
+# Encode credentials into a login URL
+login_url = f"https://admin-v2.ndceg.com/auth/login?user={username}&pass={password}"
+
+# Generate QR code
+qr = pyqrcode.create(login_url)
+qr.png("static/login_qr.png", scale=8)
+
+print("QR Code generated successfully! Open 'static/login_qr.png' to scan.")
