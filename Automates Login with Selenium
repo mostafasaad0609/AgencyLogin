@@ -1,0 +1,37 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import webbrowser
+
+# Open the login URL after scanning QR Code
+login_url = "https://admin-v2.ndceg.com/auth/login?user=m.farag&pass=M@stafa_2717"
+webbrowser.open(login_url)
+
+# Initialize WebDriver
+driver = webdriver.Chrome()
+driver.maximize_window()
+
+# Open login page
+driver.get(login_url)
+
+# Wait for page to load
+wait = WebDriverWait(driver, 20)
+
+# Input username and password
+username_field = wait.until(EC.presence_of_element_located((By.ID, "id-Username")))
+username_field.send_keys("m.farag")
+
+password_field = wait.until(EC.presence_of_element_located((By.ID, "id-Password")))
+password_field.send_keys("M@stafa_2717")
+
+# Click login button
+login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[.//span[text()='Login']]")))
+login_button.click()
+
+# Click Dashboard link
+dashboard_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '/dashboard')]")))
+dashboard_link.click()
+
+print("Login successful!")
+driver.quit()
