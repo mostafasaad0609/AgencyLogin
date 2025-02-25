@@ -1,0 +1,26 @@
+import cv2
+import pyzbar.pyzbar as pyzbar
+import webbrowser
+
+def scan_qr_code():
+    cap = cv2.VideoCapture(0)  # Open webcam
+    while True:
+        _, frame = cap.read()
+        decoded_objects = pyzbar.decode(frame)
+
+        for obj in decoded_objects:
+            login_url = obj.data.decode("utf-8")
+            print(f"Login URL: {login_url}")
+            cap.release()
+            cv2.destroyAllWindows()
+            webbrowser.open(login_url)  # Open login page in browser
+            return
+
+        cv2.imshow("QR Code Scanner", frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+scan_qr_code()
